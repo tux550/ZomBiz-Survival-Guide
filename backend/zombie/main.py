@@ -73,7 +73,7 @@ class Subscription(db.Model):
     subscription_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title           = db.Column(db.String(255), unique=True, nullable=False)
     days            = db.Column(db.Integer, nullable=False)
-    price           = db.Column(db.Numeric(5,2), nullable=False)
+    price           = db.Column(db.Integer, nullable=False)
 
     def __init__(self, title, days, price):
         self.title = title
@@ -139,6 +139,9 @@ def create_checkout_session():
     # Get user email
     token = request.json.get('token')
     user_email = User.decode_auth_token(token)
+    # Get subscription
+    subscription_id = request.json.get('subscription_id')
+    subscription = Subscription.query.get_or_404(subscription_id)
     # Create session
     domain_url = Config.FRONTEND_ORIGIN
     try:
@@ -146,21 +149,26 @@ def create_checkout_session():
         checkout_session = stripe.checkout.Session.create(
             success_url=domain_url + "/success?session_id={CHECKOUT_SESSION_ID}",
             cancel_url=domain_url + "/cancelled",
-            #client_reference_id=user_email, # Reference client by email
+            client_reference_id=user_email, # Reference client by email
             payment_method_types=["card"],
             mode="payment",
             line_items=[
                 {
-                    "name": "T-shirt",
+                    "name": subscription.title,
                     "quantity": 1,
                     "currency": "usd",
-                    "amount": "2000",
+                    "amount": subscription.price * 100,
                 }
-            ]
+            ],
+            metadata={
+                "subscription":subscription_id
+            }
         )
         return jsonify({"sessionUrl": checkout_session["url"]})
     except Exception as e:
         return jsonify(error=str(e)), 404
+
+# TODO: webhook to update database
 
 
 # Run app
