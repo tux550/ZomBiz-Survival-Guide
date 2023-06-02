@@ -8,6 +8,7 @@ from flask import Flask, request, jsonify, abort
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_serialize import FlaskSerialize
 # Config
 from config import Config
 
@@ -23,6 +24,7 @@ cors = CORS(app, resources={
 })
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
+fs_mixin = FlaskSerialize(db)
 stripe.api_key = Config.STRIPE_SECRET_KEY
 
 # --------------------------------------------------
@@ -66,7 +68,7 @@ class User(db.Model):
 
 
 
-class Subscription(db.Model):
+class Subscription(db.Model, fs_mixin):
     """ Subscription Model for storing suscription options """
     __tablename__ = "subscriptions"
 
@@ -131,6 +133,13 @@ def login():
         abort(404)
 
 
+# -----      API      -------
+
+
+@app.route("/api/resources/subscriptions/<int:subs_id>", methods=["GET",])
+@app.route("/api/resources/subscriptions", methods=["GET",])
+def get_subscriptions(subs_id=None):
+    return Subscription.fs_get_delete_put_post(subs_id)
 
 # ----- STRIPE ROUTES -------
 @app.route("/api/payment/create-checkout-session", methods=["POST",])
