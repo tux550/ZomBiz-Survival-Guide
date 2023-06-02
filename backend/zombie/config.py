@@ -1,0 +1,21 @@
+import os
+
+class Config():
+    # FLASK SECRET KEY
+    FLASK_SECRET_KEY = os.environ["FLASK_SECRET_KEY"]
+
+    # DB
+    DB_URI = 'sqlite:///db.sqlite3'
+
+    # STRIPE CONFIG
+    STRIPE_SECRET_KEY      = os.environ["STRIPE_SECRET_KEY"]
+    STRIPE_PUBLISHABLE_KEY = os.environ["STRIPE_PUBLISHABLE_KEY"]
+
+    # FRONTEND CONFIG
+    FRONTEND_DOMAIN   = "127.0.0.1"
+    FRONTEND_PORT     = "3000"
+    FRONTEND_PROTOCOL = "http"
+    FRONTEND_ORIGIN   = f"{FRONTEND_PROTOCOL}://{FRONTEND_DOMAIN}:{FRONTEND_PORT}" 
+
+    # TOKEN CONFIG
+    
