@@ -178,7 +178,35 @@ def create_checkout_session():
     except Exception as e:
         return jsonify(error=str(e)), 404
 
+
 # TODO: webhook to update database
+@app.route("/api/payment/checkout-webhook", methods=['POST',])
+@token_required
+def send_checkout_session():
+    # Get user email
+    token = request.json.get('token')
+    user_email = User.decode_auth_token(token)
+    # Get subscription
+    subscription_id = request.json.get('subscription_id')
+
+    payload = request.data
+    sig_header = request.headers['STRIPE_SIGNATURE']
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, Config.STRIPE_ENDPOINT_SECRET
+        )
+    except ValueError as e:
+        return jsonify(error=str(e)), 404
+    except stripe.error.SignatureVerificationError as e:
+        return jsonify(error=str(e)), 404
+    
+    # Handle event
+    instance = SubscriptionHistory(user_email, subscription_id)
+    db.session.add(instance)
+    db.session.commit()
+
+    return jsonify(success=True), 200
 
 
 # Run app
