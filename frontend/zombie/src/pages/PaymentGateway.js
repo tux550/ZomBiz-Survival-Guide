@@ -1,11 +1,13 @@
 import React from 'react'
-import { PaymentForm } from '../components/PaymentForm'
+import { PaymentButton } from '../components/PaymentButton'
+import config from "../config"
 
 function PaymentGateway() {
   return (
     <div>
       PaymentGateway
-      <PaymentForm/>
+      {config.api.host}
+      <PaymentButton/>
     </div>
     
   )

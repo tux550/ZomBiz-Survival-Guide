@@ -1,5 +1,6 @@
 venv/
 vars.bat
+vars.sh
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
