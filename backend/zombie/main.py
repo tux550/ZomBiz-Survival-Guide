@@ -182,12 +182,13 @@ def create_checkout_session():
 # TODO: webhook to update database
 @app.route("/api/payment/checkout-webhook", methods=['POST',])
 @token_required
-def send_checkout_session():
+def webhook_checkout_session():
     # Get user email
     token = request.json.get('token')
     user_email = User.decode_auth_token(token)
-    # Get subscription
+    # Get subscription --> cambiar esto
     subscription_id = request.json.get('subscription_id')
+    # stripe.checkout.Session.retrieve()
 
     payload = request.data
     sig_header = request.headers['STRIPE_SIGNATURE']
@@ -206,7 +207,7 @@ def send_checkout_session():
     db.session.add(instance)
     db.session.commit()
 
-    return jsonify(success=True), 200
+    return jsonify(success=True)
 
 
 # Run app
