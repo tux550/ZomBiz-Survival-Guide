@@ -19,9 +19,10 @@ from config import Config
 app  = Flask(__name__)
 app.config['SECRET_KEY']               = Config.FLASK_SECRET_KEY
 app.config ['SQLALCHEMY_DATABASE_URI'] = Config.DB_URI
-cors = CORS(app, resources={
-    r"/api/*": {"origins": Config.FRONTEND_ORIGIN}
-})
+CORS(app)
+#cors = CORS(app, resources={
+#    r"/api/*": {"origins": Config.FRONTEND_ORIGIN}
+#})
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 fs_mixin = FlaskSerialize(db)

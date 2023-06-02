@@ -3,7 +3,7 @@ import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import { redirect } from "react-router-dom";
 
-async function getSessionUrl() {
+async function getSessionUrl(subscription_id) {
   const response = await fetch(
     "http://127.0.0.1:4242/payment/create-checkout-session",
     {
@@ -25,7 +25,7 @@ async function getSessionUrl() {
 export const PaymentButton = () => {
   return (
     <div>
-      <button onClick={getSessionUrl}> Pay </button>
+      <button onClick={getSessionUrl()}> Pay </button>
     </div>
   )
 }
