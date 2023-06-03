@@ -133,7 +133,20 @@ def login():
     else:
         abort(404)
 
+@app.route("/api/auth/register", methods=["POST"])
+def register():
+    data = request.json
+    
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
+    if User.query.filter_by(email=email).first():
+        return jsonify({"message": "El usuario ya está registrado"}), 400
+    user = User(email=email, password=password)
+    db.session.add(user)
+    db.session.commit()
 
+    return jsonify({"message": "Registro exitoso"})
 # -----      API      -------
 
 
