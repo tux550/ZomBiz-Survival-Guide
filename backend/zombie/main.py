@@ -187,8 +187,9 @@ def webhook_checkout_session():
     token = request.json.get('token')
     user_email = User.decode_auth_token(token)
     # Get subscription --> cambiar esto
-    subscription_id = request.json.get('subscription_id')
-    # stripe.checkout.Session.retrieve()
+    # subscription_id = request.json.get('subscription_id')
+    session = stripe.checkout.Session.retrieve(request.json.get('sessionUrl'))
+    subscription_id = session.metadata['subscription']
 
     payload = request.data
     sig_header = request.headers['STRIPE_SIGNATURE']
