@@ -147,11 +147,13 @@ def get_subscriptions(subs_id=None):
 @token_required
 def create_checkout_session():
     # Get user email
+    print("SSS")
     token = request.json.get('token')
     user_email = User.decode_auth_token(token)
     # Get subscription
     subscription_id = request.json.get('subscription_id')
     subscription = Subscription.query.get_or_404(subscription_id)
+    print("TRY")
     # Create session
     domain_url = Config.FRONTEND_ORIGIN
     try:

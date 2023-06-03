@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import {SignInPost} from "../connections/Auth"
+import {SignInPost} from "../connections/Api"
 
 function LoginForm() {
   const handleSubmit = (event) => {
