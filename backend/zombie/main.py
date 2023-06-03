@@ -181,15 +181,7 @@ def create_checkout_session():
 
 # TODO: webhook to update database
 @app.route("/api/payment/checkout-webhook", methods=['POST',])
-@token_required
 def webhook_checkout_session():
-    # Get user email
-    token = request.json.get('token')
-    user_email = User.decode_auth_token(token)
-    # Get subscription --> cambiar esto
-    subscription_id = request.json.get('subscription_id')
-    # stripe.checkout.Session.retrieve()
-
     payload = request.data
     sig_header = request.headers['STRIPE_SIGNATURE']
 
@@ -198,16 +190,29 @@ def webhook_checkout_session():
             payload, sig_header, Config.STRIPE_ENDPOINT_SECRET
         )
     except ValueError as e:
-        return jsonify(error=str(e)), 404
+        #print("Weebhook Invalid Payload")
+        return "Invalid payload", 400
     except stripe.error.SignatureVerificationError as e:
-        return jsonify(error=str(e)), 404
+        #print("Weebhook Invalid Signature")
+        return "Invalid signature", 400
     
-    # Handle event
-    instance = SubscriptionHistory(user_email, subscription_id)
-    db.session.add(instance)
-    db.session.commit()
-
-    return jsonify(success=True)
+    if event["type"] == "checkout.session.completed":
+        #print(event["data"])
+        # Handle event
+        checkout = event["data"]["object"]
+        # Extract data
+        user_email = checkout["client_reference_id"]
+        subscription_id = checkout["metadata"]["subscription"]
+        # Get DB object
+        user         = User.query.filter_by(email=user_email).first_or_404()
+        subscription = Subscription.query.get_or_404(subscription_id)
+        # Update database
+        sh   = SubscriptionHistory(user.email, subscription.subscription_id) # Create in history
+        user.subscription_expires = datetime.datetime.now() + datetime.timedelta(days=subscription.days) # Update user
+        db.session.add(sh)
+        # Commit
+        db.session.commit()
+    return "Success", 200
 
 
 # Run app
