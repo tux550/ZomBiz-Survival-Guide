@@ -17,3 +17,17 @@ export function SignInPost(email, password) {
         window.location.replace('/?success=False');
     });
 }
+
+export function SignUpPost(name, email, password) {
+    axiosAuth
+      .post('/api/auth/register', { name, email, password })
+      .then((response) => {
+        cookies.set('Token', response.data.token);
+        window.location.replace('/?success=True');
+      })
+      .catch((error) => {
+        cookies.set('Token', '');
+        alert('Can not sign up');
+        window.location.replace('/?success=False');
+      });
+  }
