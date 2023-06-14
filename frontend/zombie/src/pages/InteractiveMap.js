@@ -13,7 +13,7 @@ export default function InteractiveMap() {
 		<div>
 			<p>Puntos y areas de interes</p>
 			
-			<div>
+			<div id='map'>
 				<Map
 					center={center}
 					markers={interest_points.markers}
