@@ -6,7 +6,6 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 export default function Map({center, markers}) {
 	const pos = [center.lat, center.lng];
-
 	const defIcon = L.icon({
 		iconUrl: icon,
 		shadowUrl: iconShadow
@@ -30,7 +29,14 @@ export default function Map({center, markers}) {
 						<Marker icon={defIcon} position={p}>
 							<Popup>
 								<span>
-									{position.description}
+									{
+										position.description.split('\n')
+											.map((item) => {
+												return (
+													<p>{item}</p>
+												);
+											})
+									}
 								</span>
 							</Popup>
 						</Marker>
