@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
-import interest_points from '../data/interest_points.json';
 import Map from '../components/Map.js';
+
+import interest_points from '../data/interest_points.json';
+import interest_areas from '../data/interest_areas.json';
+
 import 'leaflet/dist/leaflet.css';
 
 
@@ -8,6 +11,9 @@ export default function InteractiveMap() {
 	const center = useMemo(
 		() => ({lat: -12.04637, lng: -77.04279})
 	, []);
+
+	const safeAreas = interest_areas.areas.safe;
+	const cautiousAreas = interest_areas.areas.cautious;
 	
 	return (
 		<div>
@@ -17,7 +23,8 @@ export default function InteractiveMap() {
 				<Map
 					center={center}
 					markers={interest_points.markers}
-					windows={interest_points.markers}
+					safeAreas={safeAreas}
+					cautiousAreas={cautiousAreas}
 				/>
 			</div>
 		</div>

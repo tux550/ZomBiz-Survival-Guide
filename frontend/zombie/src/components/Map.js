@@ -1,10 +1,13 @@
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, Polygon } from 'react-leaflet';
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 // https://react-leaflet.js.org/docs/api-map/
 
-export default function Map({center, markers}) {
+
+// todas las coordenadas deben estar en longitud y latitud
+// las areas son conjuntos de coordenadas (en longitud y latitud) que forman una figura
+export default function Map({center, markers, safeAreas, cautiousAreas, dangerAreas}) {
 	const pos = [center.lat, center.lng];
 	const defIcon = L.icon({
 		iconUrl: icon,
@@ -43,7 +46,26 @@ export default function Map({center, markers}) {
 					);
 				})
 			}
-			
+			{
+				safeAreas.map((area) => {
+					return (
+						<Polygon
+							pathOptions={{color: 'lime'}}
+							positions={area}
+						/>
+					);
+				})
+			}
+			{
+				cautiousAreas.map((area) => {
+					return (
+						<Polygon
+							pathOptions={{color: 'yellow'}}
+							positions={area}
+						/>
+					);
+				})
+			}
 		</MapContainer>
 	);
 }
