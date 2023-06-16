@@ -66,6 +66,16 @@ export default function Map({center, markers, safeAreas, cautiousAreas, dangerAr
 					);
 				})
 			}
+			{
+				dangerAreas.map((area) => {
+					return (
+						<Polygon
+							pathOptions={{color: 'red'}}
+							positions={area}
+						/>
+					);
+				})
+			}
 		</MapContainer>
 	);
 }

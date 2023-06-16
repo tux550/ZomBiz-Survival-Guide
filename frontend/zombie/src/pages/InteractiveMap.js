@@ -25,6 +25,7 @@ export default function InteractiveMap() {
 					markers={interest_points.markers}
 					safeAreas={safeAreas}
 					cautiousAreas={cautiousAreas}
+					dangerAreas={[]}
 				/>
 			</div>
 		</div>
