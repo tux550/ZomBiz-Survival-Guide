@@ -32,6 +32,25 @@ stripe.api_key = Config.STRIPE_SECRET_KEY
 #                      Database
 # --------------------------------------------------
 
+class InterestLocation(db.Model):
+    """  """
+    __tablename__ = "interest_location"
+
+    location_id     = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    is_marker       = db.Column(db.Boolean, unique=False, nullable=False, default=False)
+    zone            = db.Column(db.Integer, nullable=False)
+    longitude       = db.Column(db.Float, nullable=False)
+    latitude        = db.Column(db.Float, nullable=False)
+    danger_level    = db.Column(db.String(30), nullable=False)
+    description     = db.Column(db.String(300), nullable=False)
+
+    def __init__(self, is_marker, lng, lat, danger, desc):
+        self.is_marker = is_marker
+        self.longitude = lng
+        self.latitude = lat
+        self.danger_level = danger
+        self.description = desc
+
 
 class User(db.Model):
     """ User Model for storing user related details """
