@@ -37,5 +37,9 @@ npm start
 ```
 
 ## ToDo
+### BACKEND
+- retrieve and insert data from map database
+
 ### FRONTEND
+- connect to map data service
 - show subscriptions and their buttons for payment
