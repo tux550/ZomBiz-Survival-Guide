@@ -17,7 +17,7 @@ function RegisterForm() {
   return (
     <div className="register-form-container">
       <div className="form-wrapper">
-        <h2 className="register-title">Registrate</h2>
+        <h2 className="register-title">Regístrate</h2>
         <Box component="form" noValidate onSubmit={handleSubmit}>
           <TextField
             margin="normal"
