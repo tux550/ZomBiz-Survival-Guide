@@ -9,7 +9,15 @@ function createSession (subscription_id) {
 export const SubsciptionButton = ({subscription}) => {
     return (
         <div>
-          <Button fullWidth onClick={()=>{createSession(subscription.subscription_id)}}> {subscription.title} </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={()=>{createSession(subscription.subscription_id)}}
+            style={{ marginTop: '16px' }}
+            > {subscription.title}
+          </Button>
         </div>
     );
 }

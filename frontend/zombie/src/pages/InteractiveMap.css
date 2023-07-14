@@ -1,0 +1,21 @@
+/* InteractiveMap.css */
+
+.map-page-container {
+    margin-left: 30px;
+    margin-right: 30px;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .map-container {
+    margin-top: 10x;
+  }
+  
+  #map {
+    height: 400px;
+  }
+  

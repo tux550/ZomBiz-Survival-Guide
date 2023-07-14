@@ -9,10 +9,10 @@ with app.app_context():
     db.session.add(u2)
     db.session.commit()
 
-    s1 = Subscription('Month Sub',30,60)
+    s1 = Subscription('Suscripción Mensual',30,60)
     db.session.add(s1)
     db.session.commit()
     
-    s2 = Subscription('Yearly Sub',365,600)
+    s2 = Subscription('Suscripción Anual',365,600)
     db.session.add(s2)
     db.session.commit()

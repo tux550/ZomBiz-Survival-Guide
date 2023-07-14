@@ -1,8 +1,9 @@
+import "./Resources.css"
 function Resources() {
   return (
     <div>
         <header>
-            <h1>Zombie Guide: Tus Recursos</h1>
+            <h1>Tus Recursos</h1>
         </header>
 
         <main>
@@ -35,7 +36,7 @@ function Resources() {
                     <td>Tablones de Madera</td>
                     <td>10</td>
                     <td>
-                    <button>Editar</button>
+                    {/* <button>Editar</button> */}
                     <button>Remover</button>
                     </td>
                 </tr>
@@ -43,7 +44,8 @@ function Resources() {
                     <td>Medicina</td>
                     <td>5</td>
                     <td>
-                    <button>Editar</button>
+                        
+                    {/* <button>Editar</button> */}
                     <button>Remover</button>
                     </td>
                 </tr>
@@ -55,8 +57,6 @@ function Resources() {
         <footer>
             <p>&copy; 2023 Zombie Apocalypse Resources. All rights reserved.</p>
         </footer>
-        
-    <link rel ="stylesheet" type ="text/css" href ="./css/resources.css" />
   </div>
     
     )
