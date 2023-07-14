@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import "./Resources.css";
 
@@ -6,20 +5,38 @@ function Resources() {
   const [resources, setResources] = useState([]);
   const [materialName, setMaterialName] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [editIndex, setEditIndex] = useState(-1);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (materialName && quantity) {
-      const newResource = {
-        name: materialName,
-        quantity: quantity
-      };
+      if (editIndex !== -1) {
+        // Editing an existing resource
+        const updatedResources = [...resources];
+        updatedResources[editIndex] = { name: materialName, quantity: quantity };
+        setResources(updatedResources);
+        setEditIndex(-1);
+      } else {
+        // Adding a new resource
+        const newResource = {
+          name: materialName,
+          quantity: quantity
+        };
 
-      setResources([...resources, newResource]);
+        setResources([...resources, newResource]);
+      }
+
       setMaterialName("");
       setQuantity("");
     }
+  };
+
+  const handleEdit = (index) => {
+    const resourceToEdit = resources[index];
+    setMaterialName(resourceToEdit.name);
+    setQuantity(resourceToEdit.quantity);
+    setEditIndex(index);
   };
 
   const handleRemove = (index) => {
@@ -59,7 +76,7 @@ function Resources() {
               required
             />
 
-            <input type="submit" value="Crear" />
+            <input type="submit" value={editIndex !== -1 ? "Actualizar" : "Crear"} />
           </form>
         </section>
 
@@ -70,7 +87,7 @@ function Resources() {
               <tr>
                 <th>Nombre</th>
                 <th>Cantidad</th>
-                <th>Acción</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -79,6 +96,7 @@ function Resources() {
                   <td>{resource.name}</td>
                   <td>{resource.quantity}</td>
                   <td>
+                    <button onClick={() => handleEdit(index)}>Editar</button>
                     <button onClick={() => handleRemove(index)}>Remover</button>
                   </td>
                 </tr>
@@ -96,6 +114,8 @@ function Resources() {
 }
 
 export default Resources;
+
+
 /*
 import "./Resources.css"
 function Resources() {
