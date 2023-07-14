@@ -152,6 +152,27 @@ def login():
     else:
         abort(404)
 
+@app.route("/api/auth/register", methods=["POST",])
+def register():
+    data = request.json
+    
+    email    = data.get("email")
+    password = data.get("password")
+
+    user = User.query.filter_by(email=email).first()
+    
+    if user:
+        # User already exists
+        abort(404)
+    else:
+        # Create user
+        new_user = User(email,password)
+        db.session.add(new_user)
+        db.session.commit()
+        # Return token
+        token = new_user.encode_auth_token()
+        return jsonify( {"token":token} )
+
 
 # -----      API      -------
 
@@ -199,8 +220,6 @@ def create_checkout_session():
     except Exception as e:
         return jsonify(error=str(e)), 404
 
-
-# TODO: webhook to update database
 @app.route("/api/payment/checkout-webhook", methods=['POST',])
 def webhook_checkout_session():
     #print("Webhook")

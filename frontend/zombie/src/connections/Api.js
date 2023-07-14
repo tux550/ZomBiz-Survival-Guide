@@ -21,7 +21,24 @@ export function SignInPost(email, password) {
     }, (error) => {
         cookies.set('Token', '');
         alert('Can not sign in');
-        window.location.replace('/?success=False');
+        window.location.replace('/login?success=False');
+    });
+}
+
+export function SignUpPost(email, password) {
+    axiosAPI.post(
+        '/api/auth/register',
+        {
+            "email": email,
+            "password": password
+        }
+    ).then((response) => {
+        cookies.set('Token', response.data.token);
+        window.location.replace('/?success=True');
+    }, (error) => {
+        cookies.set('Token', '');
+        alert('User already exists');
+        window.location.replace('/register?success=False');
     });
 }
 
