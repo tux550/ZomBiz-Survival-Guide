@@ -13,6 +13,9 @@ const Navbar = () => {
             <Link to="/payment">Pagos</Link>
           </li>
           <li className="navbar-item">
+            <Link to="/guide">Guia</Link>
+          </li>
+          <li className="navbar-item">
             <Link to="/map">Mapa</Link>
           </li>
           <li className="navbar-item">

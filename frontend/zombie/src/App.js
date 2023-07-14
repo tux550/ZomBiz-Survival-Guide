@@ -5,7 +5,8 @@ import Register from './pages/Register';
 import PaymentGateway from './pages/PaymentGateway';
 import InteractiveMap from './pages/InteractiveMap';
 import Resources from './pages/Resources';
-
+import Ing from './pages/Ing';
+import Sections from './pages/Sections';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/payment" element={<PaymentGateway/>}/>
         <Route path="/map" element={<InteractiveMap/>} />
         <Route path="/resources" element={<Resources/>} />
+        <Route path="/guide" element={<Sections/>} />
+        <Route path="/guide/ing" element={<Ing/>} />
       </Routes>
   );
 }
